@@ -28,20 +28,26 @@ preview.html
 
 ### 方式二：用 Xcode / iPhone 模拟器运行 App
 
-如果你不会写代码，可以先按下面顺序准备环境：
+当前 iOS 版本已经改成原生 UIKit 页面，Xcode 可以直接显示小助手内容，不需要先启动 `yarn start`。
 
-1. 安装 Node.js
-   - 推荐从 <https://nodejs.org/> 下载 LTS 版本。
-2. 安装 Yarn
-   - 打开“终端”，输入：`npm install -g yarn`
-3. 安装 Xcode
-   - 从 Mac App Store 安装 Xcode，用来运行 iPhone 模拟器。
-4. 在项目文件夹安装依赖
-   - 输入：`yarn install`
-5. 启动项目
-   - 输入：`yarn start`
-6. 另开一个终端运行 iOS 版本
-   - 输入：`npx react-native run-ios`
+1. 用 Xcode 打开：
+
+   ```text
+   ios/ReactNativeDemo.xcodeproj
+   ```
+
+2. 选择一个 iPhone 模拟器。
+3. 点击左上角运行按钮。
+
+如果 Xcode 还显示旧页面，可以先执行：
+
+```text
+Product > Clean Build Folder
+```
+
+快捷键是 `Shift + Command + K`，然后重新运行。
+
+React Native 页面和测试逻辑仍保留在项目里；如果以后继续开发跨平台版本，再安装 Node.js、Yarn 并运行 `yarn install`。
 
 ### 如果遇到 fsevents 报错
 
@@ -54,7 +60,7 @@ yarn install
 yarn start --reset-cache
 ```
 
-如果只是想先看功能效果，建议直接打开 `preview.html`。
+如果只是想先看功能效果，建议直接打开 `preview.html`；如果要在 Xcode 里看，使用上面的原生 iOS 方式。
 
 如果只是想确认分层逻辑是否正确，可以运行：
 
