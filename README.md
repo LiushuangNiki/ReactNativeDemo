@@ -62,6 +62,23 @@ yarn start --reset-cache
 
 如果只是想先看功能效果，建议直接打开 `preview.html`；如果要在 Xcode 里看，使用上面的原生 iOS 方式。
 
+### 如果遇到 fishhook / EXC_BAD_ACCESS 崩溃
+
+如果 Xcode 停在类似下面的位置：
+
+```text
+indirect_symbol_bindings[i] = cur->rebindings[j].replacement;
+Thread 1: EXC_BAD_ACCESS
+```
+
+这是旧 React Native 运行时代码在新系统上的兼容问题。当前 iOS 主 App 已经移除 React Native 静态库链接，使用原生 UIKit 页面运行。更新代码后请执行：
+
+```text
+Product > Clean Build Folder
+```
+
+然后在模拟器里删除旧 App，再重新运行。
+
 如果只是想确认分层逻辑是否正确，可以运行：
 
 ```bash
