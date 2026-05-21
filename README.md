@@ -16,6 +16,18 @@
 
 ## Mac 上如何运行
 
+### 方式一：先快速查看效果，不需要安装依赖
+
+如果你只是想先看到运行结果，可以直接双击打开：
+
+```text
+preview.html
+```
+
+这个页面会在浏览器里运行，适合先确认功能和文案是否符合教学场景。
+
+### 方式二：用 Xcode / iPhone 模拟器运行 App
+
 如果你不会写代码，可以先按下面顺序准备环境：
 
 1. 安装 Node.js
@@ -30,6 +42,19 @@
    - 输入：`yarn start`
 6. 另开一个终端运行 iOS 版本
    - 输入：`npx react-native run-ios`
+
+### 如果遇到 fsevents 报错
+
+这个项目使用的是较旧版本的 React Native，在新 Mac 环境里可能出现 `fsevents unavailable`。可以先尝试：
+
+```bash
+brew install watchman
+rm -rf node_modules
+yarn install
+yarn start --reset-cache
+```
+
+如果只是想先看功能效果，建议直接打开 `preview.html`。
 
 如果只是想确认分层逻辑是否正确，可以运行：
 

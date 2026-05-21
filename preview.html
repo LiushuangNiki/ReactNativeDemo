@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>数学分层教学小助手</title>
+    <style>
+      body {
+        background: #f3f6fb;
+        color: #1f2a44;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+      }
+
+      .page {
+        margin: 0 auto;
+        max-width: 760px;
+        padding: 42px 18px;
+      }
+
+      h1 {
+        font-size: 28px;
+        margin: 0 0 8px;
+      }
+
+      .subtitle {
+        color: #60708f;
+        line-height: 1.6;
+        margin: 0 0 20px;
+      }
+
+      .card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(13, 27, 42, 0.08);
+        margin-bottom: 18px;
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 20px;
+        margin: 0 0 16px;
+      }
+
+      label {
+        color: #2f3a55;
+        display: block;
+        font-weight: 700;
+        margin: 14px 0 8px;
+      }
+
+      input,
+      textarea {
+        background: #f8fafd;
+        border: 1px solid #dce4f2;
+        border-radius: 12px;
+        box-sizing: border-box;
+        color: #1f2a44;
+        font-size: 16px;
+        padding: 12px;
+        width: 100%;
+      }
+
+      textarea {
+        min-height: 82px;
+      }
+
+      .options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .options button {
+        background: #f3f6fb;
+        border: 1px solid #dce4f2;
+        border-radius: 999px;
+        color: #52627a;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 9px 13px;
+      }
+
+      .options button.selected {
+        background: #2f6fed;
+        border-color: #2f6fed;
+        color: #fff;
+        font-weight: 700;
+      }
+
+      .hint {
+        color: #7c8aa5;
+        font-size: 13px;
+        margin-top: 6px;
+      }
+
+      .group-box {
+        background: #eaf1ff;
+        border-radius: 14px;
+        margin-bottom: 18px;
+        padding: 14px;
+      }
+
+      .group-label {
+        color: #2150b5;
+        font-size: 19px;
+        font-weight: 800;
+        margin-bottom: 6px;
+      }
+
+      .group-goal {
+        color: #3d5e9a;
+        line-height: 1.5;
+      }
+
+      .section-title {
+        font-size: 16px;
+        font-weight: 800;
+        margin: 18px 0 8px;
+      }
+
+      .task {
+        display: flex;
+        gap: 10px;
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+
+      .task-index {
+        background: #2f6fed;
+        border-radius: 10px;
+        color: #fff;
+        flex: 0 0 auto;
+        font-size: 12px;
+        font-weight: 800;
+        height: 20px;
+        line-height: 20px;
+        margin-top: 2px;
+        text-align: center;
+        width: 20px;
+      }
+
+      .paragraph {
+        color: #40506a;
+        line-height: 1.65;
+        margin: 0;
+      }
+
+      .feedback {
+        background: #fff8e6;
+        border: 1px solid #f4d68a;
+        border-radius: 12px;
+        color: #5a4312;
+        line-height: 1.65;
+        padding: 12px;
+      }
+
+      .quick-tip {
+        background: #eefaf2;
+        border: 1px solid #bbe7c8;
+        border-radius: 12px;
+        color: #275c36;
+        line-height: 1.6;
+        margin-top: 12px;
+        padding: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <h1>数学分层教学小助手</h1>
+      <p class="subtitle">
+        这个页面用于快速预览小程序效果。你可以直接修改学生信息，下方结果会自动更新。
+      </p>
+
+      <section class="card">
+        <h2>学生信息</h2>
+
+        <label for="name">学生姓名</label>
+        <input id="name" value="小明" />
+
+        <label for="score">最近一次数学测验分数</label>
+        <input id="score" inputmode="numeric" maxlength="3" value="75" />
+        <div class="hint">当前按 <span id="scoreHint">75</span> 分进行判断。</div>
+
+        <label for="problem">常见数学问题</label>
+        <textarea id="problem">计算粗心、应用题审题不仔细</textarea>
+
+        <label>作业情况</label>
+        <div class="options" data-field="homework">
+          <button type="button">认真完成</button>
+          <button type="button" class="selected">偶尔拖拉</button>
+          <button type="button">经常拖拉</button>
+        </div>
+
+        <label>学习态度</label>
+        <div class="options" data-field="attitude">
+          <button type="button">积极</button>
+          <button type="button" class="selected">一般</button>
+          <button type="button">需要提醒</button>
+        </div>
+
+        <div class="quick-tip">
+          小提示：试着把分数改成 55、75、90，可以看到 A/B/C 分层变化。
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>自动生成结果</h2>
+        <div class="group-box">
+          <div class="group-label" id="groupLabel"></div>
+          <div class="group-goal" id="groupGoal"></div>
+        </div>
+
+        <div class="section-title">本周小目标</div>
+        <p class="paragraph" id="weeklyGoal"></p>
+
+        <div class="section-title">个性化数学练习</div>
+        <div id="tasks"></div>
+
+        <div class="section-title">监督反馈机制</div>
+        <p class="paragraph" id="supervision"></p>
+
+        <div class="section-title">教师反馈话术</div>
+        <div class="feedback" id="feedback"></div>
+      </section>
+    </main>
+
+    <script>
+      const groups = {
+        foundation: {
+          key: "foundation",
+          label: "A组：基础巩固型",
+          goal: "先补基础、建立信心、保证正确率",
+        },
+        steady: {
+          key: "steady",
+          label: "B组：稳定提升型",
+          goal: "减少常见错误、提高熟练度和解题稳定性",
+        },
+        extension: {
+          key: "extension",
+          label: "C组：能力拓展型",
+          goal: "加强思维表达、挑战综合题和拓展题",
+        },
+      };
+
+      const dailyTasks = {
+        foundation: [
+          "每天完成8-10分钟基础计算练习，题量少一点，但要求每题写清步骤。",
+          "每次练习后圈出1道最容易错的题，说出错因，比如“看错符号”或“忘记进位”。",
+          "优先练习课本例题和同类型变式题，暂时不增加太多难题。",
+        ],
+        steady: [
+          "每天完成10分钟巩固练习，包含基础计算题和1道应用题。",
+          "每周整理3道典型错题，写清“错在哪里”和“下次怎么检查”。",
+          "做应用题时先用横线标出关键信息，再列式计算。",
+        ],
+        extension: [
+          "每周完成2-3道挑战题，并尝试写出两种解法或解释思路。",
+          "安排“小老师讲题”任务，用自己的话讲清题目条件、方法和答案。",
+          "鼓励记录有价值的数学发现，比如规律、简便算法或容易混淆的条件。",
+        ],
+      };
+
+      const supervision = {
+        foundation: "建议老师每周至少关注2次：一次检查基础任务，一次给出具体鼓励。",
+        steady: "建议老师每周五进行一次简短反馈，重点看错题整理和检查习惯。",
+        extension: "建议老师每周安排一次挑战展示，重点关注思路表达和方法总结。",
+      };
+
+      function normalizeScore(value) {
+        const score = Number(value);
+        if (Number.isNaN(score) || score < 0) return 0;
+        if (score > 100) return 100;
+        return Math.round(score);
+      }
+
+      function classifyStudent(score) {
+        if (score >= 85) return groups.extension;
+        if (score >= 60) return groups.steady;
+        return groups.foundation;
+      }
+
+      function selectedValue(field) {
+        return document.querySelector(`[data-field="${field}"] .selected`).textContent;
+      }
+
+      function buildWeeklyGoal(group, name) {
+        const displayName = name || "这名学生";
+        if (group.key === "foundation") {
+          return displayName + "本周目标：每天坚持完成基础练习，先把正确率稳定在80%以上。";
+        }
+        if (group.key === "steady") {
+          return displayName + "本周目标：完成练习后主动检查，争取把粗心错误减少到2处以内。";
+        }
+        return displayName + "本周目标：完成挑战题后能清楚讲出解题思路，并尝试总结方法。";
+      }
+
+      function updatePlan() {
+        const name = document.getElementById("name").value.trim() || "同学";
+        const score = normalizeScore(document.getElementById("score").value);
+        const problem = document.getElementById("problem").value.trim();
+        const homework = selectedValue("homework");
+        const attitude = selectedValue("attitude");
+        const group = classifyStudent(score);
+        const focus = problem
+          ? "近期重点关注：" + problem + "。"
+          : "先观察近期作业和测验，找出最常出现的数学问题。";
+
+        document.getElementById("scoreHint").textContent = score;
+        document.getElementById("groupLabel").textContent = group.label;
+        document.getElementById("groupGoal").textContent = group.goal;
+        document.getElementById("weeklyGoal").textContent = buildWeeklyGoal(group, name);
+        document.getElementById("supervision").textContent = supervision[group.key];
+        document.getElementById("feedback").textContent =
+          name +
+          "目前属于" +
+          group.label +
+          "。" +
+          focus +
+          "从作业情况看，" +
+          homework +
+          "；从学习态度看，" +
+          attitude +
+          "。下周建议继续完成小目标，做完题后主动检查，老师会根据完成情况给予及时反馈。";
+
+        document.getElementById("tasks").innerHTML = dailyTasks[group.key]
+          .map((task, index) => {
+            return `<div class="task"><span class="task-index">${index + 1}</span><span>${task}</span></div>`;
+          })
+          .join("");
+      }
+
+      document.querySelectorAll("input, textarea").forEach((element) => {
+        element.addEventListener("input", updatePlan);
+      });
+
+      document.querySelectorAll(".options button").forEach((button) => {
+        button.addEventListener("click", () => {
+          button.parentElement.querySelectorAll("button").forEach((item) => {
+            item.classList.remove("selected");
+          });
+          button.classList.add("selected");
+          updatePlan();
+        });
+      });
+
+      updatePlan();
+    </script>
+  </body>
+</html>
